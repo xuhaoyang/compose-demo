@@ -1,6 +1,6 @@
 # Jetpack Compose 介绍
 一种全新的Android UI框架，使用kotlin开发。</br>
-DemoApp下载地址：[传送门](https://test-1254170634.cos.ap-nanjing.myqcloud.com/demo_app.apk)，打不开请扫码下载：</br>
+DemoApp下载地址：[传送门](https://test-1254170634.cos.ap-nanjing.myqcloud.com/compose_demo.apk)，打不开请扫码下载：</br>
 
 <img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/62e44936c51046b39fef652731842e6d~tplv-k3u1fbpfcp-watermark.image" width="150px" height="150px"/>
 
