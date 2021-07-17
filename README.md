@@ -1,10 +1,13 @@
 # Jetpack Compose 介绍
 一种全新的Android UI框架，使用kotlin开发。</br>
-DemoApp下载地址：[传送门](https://gitee.com/Rickyal/compose-demo/raw/master/results/demo_app.apk)</br>
+DemoApp下载地址：[传送门](https://test-1254170634.cos.ap-nanjing.myqcloud.com/demo_app.apk)，打不开请扫码下载：</br>
+
+<img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/62e44936c51046b39fef652731842e6d~tplv-k3u1fbpfcp-watermark.image" width="150px" height="150px"/>
+
 Gitee：[传送门](https://gitee.com/Rickyal/compose-demo)</br>
 Demo效果：
 
-<img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4ef091446d8a43bf8e704f526f2a1e35~tplv-k3u1fbpfcp-watermark.image" width="50%" height="50%"/>
+<img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4ef091446d8a43bf8e704f526f2a1e35~tplv-k3u1fbpfcp-watermark.image" width="300px" height="50%"/>
 
 ### 优点
 代码量更少，性能更高，加快开发速度，减少应用包的大小。
