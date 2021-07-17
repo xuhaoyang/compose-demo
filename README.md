@@ -1253,7 +1253,7 @@ Placeable：用于设置子布局的位置，并且存储了测量出来的子�
 ```kotlin
 // 测量父布局的constraints，拿到placeable
 val placeable = measurable.measure(constraints)
-// 设置子布局的大小
+// 设置父布局的大小
 layout(placeable.width, placeable.height) {
     // 设置子布局在父布局中的x, y位置
     placeable.placeRelative(xPosition, yPosition)
@@ -1266,7 +1266,7 @@ layout(placeable.width, placeable.height) {
 fun Modifier.paddingHorizontal(padding: Dp) = layout { measurable, constraints ->
     // 这里执行measure，拿到子布局的宽高
     val placeable = measurable.measure(constraints.offset(-padding.roundToPx() * 2, 0))
-    // 设置子布局宽高
+    // 设置父布局宽高
     layout(placeable.width, placeable.height) {
         // 设置子布局位置
         placeable.placeRelative(padding.roundToPx(), 0)
@@ -1627,7 +1627,7 @@ Spring类型的动画具有弹性的效果，词如其名，动画会有一个�
 ![animation-spring.gif](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6099d3549e204206a0d6f5818dd8a84a~tplv-k3u1fbpfcp-watermark.image)
 
 Spring可以设置两个参数：dampingRatio和stiffness。</br>
-假如Spring类型的动画是一根弹簧，那么dampingRatio就是弹簧的收缩速率，而stiffness是弹簧的软硬程度。dampingRatio决定动画速率，stiffness决定弹跳效果。
+假如Spring类型的动画是一根弹簧，那么dampingRatio就是弹簧的弹性，而stiffness是弹簧的软硬程度。dampingRatio决定动画弹性，stiffness决定动画执行时间。
 
 #### Tween 
 除了Sprin，Tween类型的动画更加常用，先看下参数：
@@ -1709,7 +1709,8 @@ Box(
             )
         }) 
 ```
-上面的pointerInput用于触摸事件的监听，通过在Scope中执行不同的detect，可以拿到不同类型的触摸数据。
+上面的pointerInput用于触摸事件的监听，通过在Scope中执行不同的detect，可以拿到不同类型的触摸数据。</br>
+目前貌似没有提供监听多次点击的方法，不过应该可以通过监听按下次数来判断。
 ### 滑动监听
 Compose提供了三种监听滑动的方式，用于监听横向滑动，竖直滑动以及任意滑动。
 * 横向滑动
@@ -1863,7 +1864,7 @@ Box(
         .background(MaterialTheme.colors.primary)
         .size(100.dp)
 ```
-
+但是目前来看效果貌似不太理想，放大后再拖动组件，会出现迟钝的现象。
 # 总结
 将Compose基本上所有的组件手撸了一遍之后，发现确实能够减少开发的代码量，因为少了各种xml，并且没有了原来那种手动写代码更新视图的繁琐流程，代码量预计少了40%，估计包的大小也能缩水一大半。
 
