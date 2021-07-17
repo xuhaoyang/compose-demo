@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -83,7 +84,7 @@ fun LoadBitmapDemo() {
     val bitmap = createBitmap(100, 100)
     bitmap.applyCanvas {
         val paint = Paint(Paint.ANTI_ALIAS_FLAG)
-        paint.color = android.graphics.Color.BLACK
+        paint.color = MaterialTheme.colors.onBackground.toArgb()
         drawCircle(50f, 50f, 50f, paint)
     }
     Image(bitmap = bitmap.asImageBitmap(), contentDescription = null)

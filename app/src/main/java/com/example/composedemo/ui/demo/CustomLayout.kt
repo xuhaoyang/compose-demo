@@ -45,23 +45,23 @@ fun CustomLayoutContent() {
         Text("这是一个自定义的FlowBox布局，一行内容放不下了会自动换行")
         Text("不信试试改变按钮上下左右的间距试试")
         OutlinedTextField(
-            value = start.toString(),
-            onValueChange = { start = if (it.isNotEmpty()) it.toInt().coerceAtLeast(1) else 10 },
+            value = if (start != 0) start.toString() else "",
+            onValueChange = { start = if (it.isNotEmpty()) it.toInt() else 0 },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             label = { Text("start(dp)") })
         OutlinedTextField(
-            value = top.toString(),
-            onValueChange = { top = if (it.isNotEmpty()) it.toInt().coerceAtLeast(1) else 10 },
+            value = if (top != 0) top.toString() else "",
+            onValueChange = { top = if (it.isNotEmpty()) it.toInt() else 0 },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             label = { Text("top(dp)") })
         OutlinedTextField(
-            value = end.toString(),
-            onValueChange = { end = if (it.isNotEmpty()) it.toInt().coerceAtLeast(1) else 10 },
+            value = if (end != 0) end.toString() else "",
+            onValueChange = { end = if (it.isNotEmpty()) it.toInt() else 0 },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             label = { Text("end(dp)") })
         OutlinedTextField(
-            value = bottom.toString(),
-            onValueChange = { bottom = if (it.isNotEmpty()) it.toInt().coerceAtLeast(1) else 10 },
+            value = if (bottom != 0) bottom.toString() else "",
+            onValueChange = { bottom = if (it.isNotEmpty()) it.toInt() else 0 },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             label = { Text("bottom(dp)") })
         CustomLayoutDemo(
@@ -94,9 +94,9 @@ fun CustomLayoutContent() {
             )
         }
         OutlinedTextField(
-            value = paddingHorizontal.toString(),
+            value = if (paddingHorizontal != 0) paddingHorizontal.toString() else "",
             onValueChange = {
-                paddingHorizontal = if (it.isNotEmpty()) it.toInt().coerceAtLeast(1) else 10
+                paddingHorizontal = if (it.isNotEmpty()) it.toInt() else 0
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             label = { Text("paddingHorizontal(dp)") })

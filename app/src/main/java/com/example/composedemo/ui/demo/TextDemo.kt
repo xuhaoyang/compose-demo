@@ -244,7 +244,8 @@ fun TextDemo() {
         value = text6,
         onValueChange = { text6 = it },
         cursorBrush = SolidColor(Color.Red),
-        modifier = Modifier.height(45.dp)
+        modifier = Modifier.height(45.dp),
+        textStyle = TextStyle(MaterialTheme.colors.onBackground)
     )
 
 
