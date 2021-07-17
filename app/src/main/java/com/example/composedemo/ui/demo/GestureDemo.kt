@@ -24,7 +24,7 @@ import kotlin.math.roundToInt
 @ExperimentalMaterialApi
 @Composable
 fun GesturePage() {
-    titleLiveData.value = "Compose Theme"
+    titleLiveData.value = "Compose Gesture"
     GestureContent()
 }
 
