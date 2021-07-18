@@ -1250,15 +1250,15 @@ Compose支持用户自定义布局，以及自定义布局修饰符。自定义�
 这里有几个类需要先提一下：</br>
 Measurable：包含一个measure方法，用于测量布局的宽高。</br>
 Constraints：用于存储父布局的尺寸配置，包含父布局最大最小宽高等参数。</br>
-Placeable：用于设置子布局的位置，并且存储了测量出来的子布局的宽高。
+Placeable：用于设置布局的位置，并且存储了测量出来的布局的宽高。
 
 测量+布局🌰
 ```kotlin
-// 测量父布局的constraints，拿到placeable
+// 测量布局的constraints，拿到placeable
 val placeable = measurable.measure(constraints)
-// 设置父布局的大小
+// 设置布局的大小
 layout(placeable.width, placeable.height) {
-    // 设置子布局在父布局中的x, y位置
+    // 设置布局左上角x，y位置
     placeable.placeRelative(xPosition, yPosition)
 }
 ```
@@ -1267,11 +1267,11 @@ layout(placeable.width, placeable.height) {
 布局修饰符即上面提到的Modifier，Compose支持扩展Modifier类，从而实现自己的布局方式，举个扩展设置PaddingHorizontal的🌰吧
 ```kotlin
 fun Modifier.paddingHorizontal(padding: Dp) = layout { measurable, constraints ->
-    // 这里执行measure，拿到子布局的宽高
+    // 这里执行measure，拿到布局的宽高
     val placeable = measurable.measure(constraints.offset(-padding.roundToPx() * 2, 0))
-    // 设置父布局宽高
+    // 设置布局宽高
     layout(placeable.width, placeable.height) {
-        // 设置子布局位置
+        // 设置布局左上角x，y位置
         placeable.placeRelative(padding.roundToPx(), 0)
     }
 }
@@ -1359,7 +1359,7 @@ fun flowBoxMeasurePolicy(itemGap: FlowBoxGap) = MeasurePolicy { measurables, con
     // 拿到所有子组件加起来的高度
     val height = yPosition + currentLineMaxHeight
 
-    // 设置父布局的宽高
+    // 设置FlowBox的宽高
     layout(constraints.maxWidth, height) {
         // 遍历位置列表，设置子组件的位置
         positions.zip(placeables).forEach { (position, placeable) ->
@@ -1633,7 +1633,7 @@ Spring可以设置两个参数：dampingRatio和stiffness。</br>
 假如Spring类型的动画是一根弹簧，那么dampingRatio就是弹簧的弹性，而stiffness是弹簧的软硬程度。dampingRatio决定动画弹性，stiffness决定动画执行时间。
 
 #### Tween 
-除了Sprin，Tween类型的动画更加常用，先看下参数：
+除了Spring，Tween类型的动画更加常用，先看下参数：
 ```kotlin
 @Stable
 fun <T> tween(
