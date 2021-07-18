@@ -224,7 +224,7 @@ fun SwipeableDemo() {
             Modifier
                 .offset { IntOffset(swipeableState.offset.value.roundToInt(), 0) }
                 .size(squareSize)
-                .background(MaterialTheme.colors.primary)
+                .background(MaterialTheme.colors.onBackground)
         )
     }
 }
