@@ -13,6 +13,7 @@ import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.graphics.drawscope.withTransform
 import androidx.compose.ui.platform.LocalContext
@@ -53,6 +54,7 @@ fun CanvasDemo() {
         CanvasRotateDemo(color)
         CanvasRotateTransitionDemo(color)
         CanvasBitmapDemo(color)
+        AndroidCanvasDemo(color)
         Spacer(modifier = Modifier.height(100.dp))
     }
 }
@@ -254,6 +256,22 @@ fun CanvasBitmapDemo(color: Color) {
     ) {
         val bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.logo)
         drawImage(bitmap.asImageBitmap())
+    }
+    Spacer(modifier = Modifier.height(60.dp))
+}
+
+@Composable
+fun AndroidCanvasDemo(color: Color) {
+    Text("Android Canvas")
+    Canvas(
+        modifier = Modifier
+            .size(100.dp)
+    ) {
+        drawIntoCanvas { canvas ->
+            val paint = Paint()
+            paint.color = color
+            canvas.drawOval(0f, 0f, 100f, 100f, paint)
+        }
     }
     Spacer(modifier = Modifier.height(10.dp))
 }
