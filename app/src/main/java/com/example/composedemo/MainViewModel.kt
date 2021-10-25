@@ -12,6 +12,7 @@ class MainViewModel() : ViewModel() {
         add(FuncInfo("列表", Screen.List.main, Color(0xFF00C29B)))
         add(FuncInfo("文字", Screen.text, Color(0xFF000000)))
         add(FuncInfo("图片", Screen.image, Color(0xFFFFBE3B)))
+        add(FuncInfo("按钮菜单",Screen.button_menu, Color(0xFFC20000)))
         add(FuncInfo("Canvas", Screen.canvas, Color(0xFF1D2E44)))
         add(FuncInfo("自定义布局", Screen.custom_layout, Color(0xFF3587EC)))
         add(FuncInfo("动画", Screen.animation, Color(0xFFDD26AF)))

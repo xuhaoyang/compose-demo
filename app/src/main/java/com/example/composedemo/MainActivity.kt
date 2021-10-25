@@ -39,6 +39,9 @@ val themeTypeState = mutableStateOf(ThemeType.Default)
 val darkThemeState = mutableStateOf(false)
 
 class MainActivity : ComponentActivity() {
+    companion object{
+        const val TAG= "Main"
+    }
     @ExperimentalTextApi
     @ExperimentalUnitApi
     @ExperimentalAnimationApi
@@ -152,6 +155,7 @@ fun Content() {
         ) { AnimationPage() }
         composable(Screen.gesture) { GesturePage() }
         composable(Screen.image) { ImagePage() }
+        composable(Screen.button_menu) { ButtonMenuPage() }
         composable(Screen.canvas) { CanvasPage() }
         composable(Screen.layout) { LayoutPage() }
         composable(Screen.custom_layout) { CustomLayoutPage() }

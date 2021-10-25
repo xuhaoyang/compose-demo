@@ -7,6 +7,7 @@ object Screen {
     const val custom_layout = "custom_layout"
     const val gesture = "gesture"
     const val image = "image"
+    const val button_menu = "button_menu"
 
     object Layout {
         const val main = "layout/main"
