@@ -62,7 +62,6 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.4.0-alpha09")
     implementation("com.google.accompanist:accompanist-navigation-animation:${rootProject.extra["accompanist_version"]}")
     implementation("io.coil-kt:coil-compose:1.3.2")
-    implementation("com.google.accompanist:accompanist-navigation-animation:${rootProject.extra["accompanist_version"]}")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
