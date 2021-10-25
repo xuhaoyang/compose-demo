@@ -1,8 +1,10 @@
 package com.example.composedemo.ui.demo
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -11,21 +13,24 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.PopupProperties
 import com.example.composedemo.R
 import com.example.composedemo.titleLiveData
+import kotlinx.coroutines.delay
 
 /**
  * User: xuhaoyang
@@ -49,9 +54,15 @@ fun ButtonMenuPage() {
             IconToggleButtonDemo()
             RadioButtonDemo()
             TextButtonDemo()
+            DropdownMenuDemo()
         }
     }
-    titleLiveData.value = "Compose Button Menu"
+    LaunchedEffect(Unit){
+        delay(500L)
+        titleLiveData.value = "Compose Button Menu"
+    }
+
+
 }
 
 @Composable
@@ -303,3 +314,50 @@ fun TextButtonDemo() {
         }
     }
 }
+
+@Composable
+fun DropdownMenuDemo(){
+    val expandState = remember {
+        mutableStateOf(false)
+    }
+    Column() {
+        Button(
+            onClick = {
+                expandState.value = true
+            }) {
+            Text(text = "打开 DropdownMenu")
+        }
+        DropdownMenu(
+            expanded = expandState.value,
+            onDismissRequest = {
+                Log.e("ccm","执行了onDismissRequest")
+                expandState.value = false
+            },
+            offset = DpOffset(10.dp,10.dp),
+            properties = PopupProperties()
+        ) {
+            DropdownMenuItemDemo(expandState,Icons.Filled.Favorite,"收藏")
+            DropdownMenuItemDemo(expandState,Icons.Filled.Edit,"编辑")
+            DropdownMenuItemDemo(expandState,Icons.Filled.Delete,"删除")
+        }
+    }
+}
+
+
+@Composable
+fun DropdownMenuItemDemo(state:MutableState<Boolean>, icon: ImageVector, text:String){
+    val interactionSource = remember { MutableInteractionSource() }
+    val pressState = interactionSource.collectIsPressedAsState()
+    val focusState = interactionSource.collectIsFocusedAsState()
+    DropdownMenuItem(
+        onClick = {
+            state.value = false
+        },
+        enabled = true,
+        interactionSource = interactionSource
+    ) {
+        Icon(imageVector = icon, contentDescription = text,tint = if(pressState.value || focusState.value) Color.Red else Color.Black)
+        Text(text = text,modifier = Modifier.padding(start = 10.dp),color = if(pressState.value || focusState.value) Color.Red else Color.Black)
+    }
+}
+
