@@ -60,6 +60,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0-beta01")
 //    implementation("androidx.activity:activity-compose:1.3.0-rc01")
     implementation("androidx.navigation:navigation-compose:2.4.0-alpha09")
+    implementation("com.google.accompanist:accompanist-navigation-animation:${rootProject.extra["accompanist_version"]}")
     implementation("io.coil-kt:coil-compose:1.3.2")
     implementation("com.google.accompanist:accompanist-navigation-animation:${rootProject.extra["accompanist_version"]}")
     testImplementation("junit:junit:4.13.2")

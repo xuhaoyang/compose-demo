@@ -1,6 +1,7 @@
 package com.example.composedemo.ui.demo
 
 import android.graphics.Paint
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -10,7 +11,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
@@ -22,10 +23,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.applyCanvas
 import androidx.core.graphics.createBitmap
+import coil.compose.ImagePainter
+import coil.compose.rememberImagePainter
+import coil.request.ImageRequest
+import coil.request.ImageResult
 import com.example.composedemo.R
 import com.example.composedemo.titleLiveData
-import com.google.accompanist.coil.rememberCoilPainter
-import com.google.accompanist.imageloading.ImageLoadState
+import com.example.composedemo.ui.demo.ImageObject.TAG
+
+object ImageObject {
+    const val TAG = "Image"
+}
 
 @Composable
 fun ImagePage() {
@@ -59,9 +67,11 @@ fun ImageDemo() {
 @Composable
 fun UrlImage(contentScale: ContentScale?) {
     Image(
-        painter = rememberCoilPainter(
-            "https://pic3.zhimg.com/v2-77bbb941f260b90f0193ef73d3f2b9e4_1440w.jpg?source=172ae18b",
-            fadeIn = true
+        painter = rememberImagePainter(
+            data = "https://pic3.zhimg.com/v2-77bbb941f260b90f0193ef73d3f2b9e4_1440w.jpg?source=172ae18b",
+            builder = {
+                crossfade(true)
+            }
         ), contentDescription = null,
         modifier = Modifier
             .size(200.dp, 300.dp)
@@ -99,9 +109,11 @@ fun RoundCornerDemo() {
         modifier = Modifier.padding(10.dp)
     ) {
         Image(
-            painter = rememberCoilPainter(
-                "https://pic3.zhimg.com/v2-77bbb941f260b90f0193ef73d3f2b9e4_1440w.jpg?source=172ae18b",
-                fadeIn = true,
+            painter = rememberImagePainter(
+                data = "https://pic3.zhimg.com/v2-77bbb941f260b90f0193ef73d3f2b9e4_1440w.jpg?source=172ae18b",
+                builder = {
+                    crossfade(true)
+                }
             ),
             contentDescription = null,
             modifier = Modifier
@@ -119,9 +131,11 @@ fun CircleDemo() {
         modifier = Modifier.padding(10.dp)
     ) {
         Image(
-            painter = rememberCoilPainter(
-                "https://pic3.zhimg.com/v2-77bbb941f260b90f0193ef73d3f2b9e4_1440w.jpg?source=172ae18b",
-                fadeIn = true,
+            painter = rememberImagePainter(
+                data = "https://pic3.zhimg.com/v2-77bbb941f260b90f0193ef73d3f2b9e4_1440w.jpg?source=172ae18b",
+                builder = {
+                    crossfade(true)
+                }
             ),
             contentDescription = null,
             modifier = Modifier
@@ -136,8 +150,42 @@ fun CircleDemo() {
 @Composable
 fun ObserveStateDemo() {
     Text(text = "监听加载状态")
+    var loading by remember {
+        mutableStateOf(true)
+    }
     val painter =
-        rememberCoilPainter("https://macjpeg.macsc.com/macdown/pic/202009/03113634_e7f0bb805b.jpeg")
+        rememberImagePainter(
+            data = "https://macjpeg.macsc.com/macdown/pic/202009/03113634_e7f0bb805b.jpeg",
+            builder = {
+                crossfade(true)
+                listener(object : ImageRequest.Listener {
+                    override fun onStart(request: ImageRequest) {
+                        super.onStart(request)
+                        Log.i(TAG, "onStart: ${request.data}")
+                    }
+
+                    override fun onSuccess(request: ImageRequest, metadata: ImageResult.Metadata) {
+                        super.onSuccess(request, metadata)
+                        Log.i(TAG, "onSuccess: ${request.data}")
+                        loading = false
+                    }
+//
+////                    override fun onCancel(request: ImageRequest) {
+////                        super.onCancel(request)
+////                        Log.i(TAG, "onCancel: ")
+////                        loading = false
+////                    }
+//
+//                    override fun onError(request: ImageRequest, throwable: Throwable) {
+//                        super.onError(request, throwable)
+//                        Log.i(TAG, "onError: ")
+//                        loading = false
+//                    }
+                })
+
+
+            }
+        )
     Box {
         Image(
             painter = painter,
@@ -148,12 +196,8 @@ fun ObserveStateDemo() {
             contentScale = ContentScale.FillWidth
         )
 
-        when (painter.loadState) {
-            is ImageLoadState.Loading -> {
-                CircularProgressIndicator(Modifier.align(Alignment.Center))
-            }
-            is ImageLoadState.Error -> {
-            }
+        if (loading) {
+            CircularProgressIndicator(Modifier.align(Alignment.Center))
         }
     }
     Spacer(modifier = Modifier.height(10.dp))
@@ -163,9 +207,11 @@ fun ObserveStateDemo() {
 fun LoadUrlDemo() {
     Text(text = "加载url")
     Image(
-        painter = rememberCoilPainter(
-            "https://macjpeg.macsc.com/macdown/pic/202009/03113634_e7f0bb805b.jpeg",
-            fadeIn = true
+        painter = rememberImagePainter(
+            data = "https://macjpeg.macsc.com/macdown/pic/202009/03113634_e7f0bb805b.jpeg",
+            builder = {
+                crossfade(true)
+            }
         ),
         contentScale = ContentScale.FillWidth,
         modifier = Modifier
@@ -180,9 +226,11 @@ fun LoadUrlDemo() {
 fun ColorFilterDemo() {
     Text(text = "colorFilter")
     Image(
-        painter = rememberCoilPainter(
-            "https://macjpeg.macsc.com/macdown/pic/202009/03113634_e7f0bb805b.jpeg",
-            fadeIn = true
+        painter = rememberImagePainter(
+            data = "https://macjpeg.macsc.com/macdown/pic/202009/03113634_e7f0bb805b.jpeg",
+            builder = {
+                crossfade(true)
+            }
         ),
         contentScale = ContentScale.FillWidth,
         modifier = Modifier

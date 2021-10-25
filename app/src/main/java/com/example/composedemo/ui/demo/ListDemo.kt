@@ -18,6 +18,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import coil.compose.rememberImagePainter
 import com.example.composedemo.MainViewModel
 import com.example.composedemo.navigation.Screen
 import com.example.composedemo.titleLiveData
@@ -25,7 +26,6 @@ import com.example.composedemo.ui.demo.viewmodel.ListViewModel
 import com.example.composedemo.ui.public.FunctionList
 import com.example.composedemo.ui.public.HorizontalNoMoreItem
 import com.example.composedemo.ui.public.VerticalNoMoreItem
-import com.google.accompanist.coil.rememberCoilPainter
 
 
 @Composable
@@ -190,7 +190,7 @@ fun ListContent(navController: NavHostController) {
 fun ImageCard(image: String, modifier: Modifier, text: String) {
     Box(contentAlignment = Alignment.Center, modifier = modifier) {
         Image(
-            painter = rememberCoilPainter(image, fadeIn = true),
+            painter = rememberImagePainter(data = image, builder = { crossfade(true) }),
             contentDescription = null,
             modifier = Modifier
                 .fillMaxSize()
