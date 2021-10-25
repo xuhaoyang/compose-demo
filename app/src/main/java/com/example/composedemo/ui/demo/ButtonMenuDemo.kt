@@ -26,12 +26,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Popup
-import androidx.compose.ui.window.PopupProperties
+import androidx.compose.ui.window.*
 import com.example.composedemo.R
 import com.example.composedemo.titleLiveData
 import kotlinx.coroutines.delay
@@ -44,7 +44,7 @@ import kotlinx.coroutines.delay
  * Description: No Description
  */
 @Composable
-fun ButtonMenuPage() {
+fun ButtonMenuDialogPage() {
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
@@ -64,7 +64,10 @@ fun ButtonMenuPage() {
             Box(
                 Modifier
                     .size(100.dp)
-                    .background(Color.Gray))
+                    .background(Color.Gray)
+            )
+            DialogDemo()
+            AlertDialogDemo()
         }
     }
     LaunchedEffect(Unit) {
@@ -418,4 +421,126 @@ fun PopupDemo() {
 }
 
 
+@Composable
+fun DialogDemo() {
+    val state = remember {
+        mutableStateOf(false)
+    }
+    Box(Modifier.padding(10.dp, 8.dp)) {
+        Button(onClick = { state.value = true }) {
+            Text(text = "打开 Dialog")
+        }
+    }
+    if (state.value) {
+        Dialog(
+            onDismissRequest = {
+                Log.e("ccm", "====onDismiss=====")
+                state.value = false
+            },
+            properties = DialogProperties(
+                dismissOnBackPress = true,
+                dismissOnClickOutside = true,
+                securePolicy = SecureFlagPolicy.SecureOff
+            )
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .padding(horizontal = 15.dp)
+                    .background(
+                        Color.White, shape = RoundedCornerShape(8.dp)
+                    )
+            ) {
+                Spacer(modifier = Modifier.height(10.dp))
+                Text(
+                    text = "对话框标题",
+                    color = Color.Black,
+                    fontSize = 16.sp,
+                    modifier = Modifier.padding(start = 10.dp),
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.height(6.dp))
+                Text(
+                    text = "对话框内容,对话框内容,对话框内容,对话框内容,对话框内容,对话框内容",
+                    modifier = Modifier.padding(horizontal = 10.dp),
+                    lineHeight = 20.sp,
+                    fontSize = 14.sp
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                Divider(modifier = Modifier.height(0.5.dp))
+                Row() {
+                    Button(
+                        onClick = {
+                            state.value = false
+                        },
+                        modifier = Modifier.weight(1f, true),
+                        shape = RoundedCornerShape(bottomStart = 8.dp),
+                        colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                    ) {
+                        Text(text = "取消")
+                    }
+                    Button(
+                        onClick = {
+                        },
+                        modifier = Modifier.weight(1f, true),
+                        shape = RoundedCornerShape(bottomEnd = 8.dp),
+                        colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                    ) {
+                        Text(text = "确定")
+                    }
+                }
+            }
+        }
+    }
+}
 
+@Composable
+fun AlertDialogDemo() {
+    val state = remember {
+        mutableStateOf(false)
+    }
+    Box(Modifier.padding(10.dp, 8.dp)) {
+        Button(onClick = { state.value = true }) {
+            Text(text = "打开 AlertDialog")
+        }
+    }
+    if (state.value) {
+        AlertDialog(
+            onDismissRequest = { state.value = false },
+            buttons = {
+                Row() {
+                    Button(
+                        onClick = {
+                            state.value = false
+                        },
+                        modifier = Modifier.weight(1f, true),
+                        shape = RoundedCornerShape(bottomStart = 8.dp),
+                        colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                    ) {
+                        Text(text = "取消")
+                    }
+                    Button(
+                        onClick = {
+                        },
+                        modifier = Modifier.weight(1f, true),
+                        shape = RoundedCornerShape(bottomEnd = 8.dp),
+                        colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                    ) {
+                        Text(text = "确定")
+                    }
+                }
+            },
+            title = {
+                Text(text = "对话框标题")
+            },
+            text = {
+                Text(text = "对话框内容对话框内容")
+            },
+            shape = RoundedCornerShape(8.dp),
+            backgroundColor = Color.White,
+            contentColor = Color.Black,
+            properties = DialogProperties()
+        )
+    }
+}

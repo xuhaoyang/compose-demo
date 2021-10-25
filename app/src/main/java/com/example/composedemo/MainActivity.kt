@@ -7,11 +7,9 @@ import androidx.activity.compose.setContent
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
@@ -20,8 +18,6 @@ import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.rememberNavController
 import com.example.composedemo.MainActivity.Companion.TAG
 import com.example.composedemo.list.ListPage
 import com.example.composedemo.navigation.Screen
@@ -155,7 +151,7 @@ fun Content() {
         ) { AnimationPage() }
         composable(Screen.gesture) { GesturePage() }
         composable(Screen.image) { ImagePage() }
-        composable(Screen.button_menu) { ButtonMenuPage() }
+        composable(Screen.button_menu_dialog) { ButtonMenuDialogPage() }
         composable(Screen.canvas) { CanvasPage() }
         composable(Screen.layout) { LayoutPage() }
         composable(Screen.custom_layout) { CustomLayoutPage() }
