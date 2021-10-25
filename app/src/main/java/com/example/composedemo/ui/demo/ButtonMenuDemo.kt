@@ -3,6 +3,7 @@ package com.example.composedemo.ui.demo
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.interaction.collectIsPressedAsState
@@ -20,13 +21,16 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.DpOffset
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
 import com.example.composedemo.R
 import com.example.composedemo.titleLiveData
@@ -44,6 +48,7 @@ fun ButtonMenuPage() {
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
+                .fillMaxWidth()
                 .verticalScroll(rememberScrollState())
         ) {
             ButtonDemo()
@@ -55,9 +60,14 @@ fun ButtonMenuPage() {
             RadioButtonDemo()
             TextButtonDemo()
             DropdownMenuDemo()
+            PopupDemo()
+            Box(
+                Modifier
+                    .size(100.dp)
+                    .background(Color.Gray))
         }
     }
-    LaunchedEffect(Unit){
+    LaunchedEffect(Unit) {
         delay(500L)
         titleLiveData.value = "Compose Button Menu"
     }
@@ -316,7 +326,7 @@ fun TextButtonDemo() {
 }
 
 @Composable
-fun DropdownMenuDemo(){
+fun DropdownMenuDemo() {
     val expandState = remember {
         mutableStateOf(false)
     }
@@ -330,22 +340,22 @@ fun DropdownMenuDemo(){
         DropdownMenu(
             expanded = expandState.value,
             onDismissRequest = {
-                Log.e("ccm","执行了onDismissRequest")
+                Log.e("ccm", "执行了onDismissRequest")
                 expandState.value = false
             },
-            offset = DpOffset(10.dp,10.dp),
+            offset = DpOffset(10.dp, 10.dp),
             properties = PopupProperties()
         ) {
-            DropdownMenuItemDemo(expandState,Icons.Filled.Favorite,"收藏")
-            DropdownMenuItemDemo(expandState,Icons.Filled.Edit,"编辑")
-            DropdownMenuItemDemo(expandState,Icons.Filled.Delete,"删除")
+            DropdownMenuItemDemo(expandState, Icons.Filled.Favorite, "收藏")
+            DropdownMenuItemDemo(expandState, Icons.Filled.Edit, "编辑")
+            DropdownMenuItemDemo(expandState, Icons.Filled.Delete, "删除")
         }
     }
 }
 
 
 @Composable
-fun DropdownMenuItemDemo(state:MutableState<Boolean>, icon: ImageVector, text:String){
+fun DropdownMenuItemDemo(state: MutableState<Boolean>, icon: ImageVector, text: String) {
     val interactionSource = remember { MutableInteractionSource() }
     val pressState = interactionSource.collectIsPressedAsState()
     val focusState = interactionSource.collectIsFocusedAsState()
@@ -356,8 +366,56 @@ fun DropdownMenuItemDemo(state:MutableState<Boolean>, icon: ImageVector, text:St
         enabled = true,
         interactionSource = interactionSource
     ) {
-        Icon(imageVector = icon, contentDescription = text,tint = if(pressState.value || focusState.value) Color.Red else Color.Black)
-        Text(text = text,modifier = Modifier.padding(start = 10.dp),color = if(pressState.value || focusState.value) Color.Red else Color.Black)
+        Icon(
+            imageVector = icon,
+            contentDescription = text,
+            tint = if (pressState.value || focusState.value) Color.Red else Color.Black
+        )
+        Text(
+            text = text,
+            modifier = Modifier.padding(start = 10.dp),
+            color = if (pressState.value || focusState.value) Color.Red else Color.Black
+        )
     }
 }
+
+@Composable
+fun PopupDemo() {
+    val expandState = remember {
+        mutableStateOf(false)
+    }
+    Column(Modifier.padding(10.dp, 8.dp)) {
+        Button(
+            onClick = {
+                expandState.value = true
+            }) {
+            Text(text = "打开 PopupDemo")
+        }
+        if (expandState.value) {
+            Popup(
+                alignment = Alignment.TopStart,
+                onDismissRequest = {
+                    Log.e("ccm", "执行了onDismissRequest")
+                    expandState.value = false
+                },
+                offset = IntOffset(10, 140),
+            ) {
+                Column(
+                    modifier = Modifier
+                        .width(IntrinsicSize.Min)
+                        .shadow(
+                            elevation = 2.dp, shape = RoundedCornerShape(3.dp)
+                        )
+                        .background(Color.White, shape = RoundedCornerShape(3.dp))
+                ) {
+                    DropdownMenuItemDemo(expandState, Icons.Filled.Favorite, "收藏")
+                    DropdownMenuItemDemo(expandState, Icons.Filled.Edit, "编辑")
+                    DropdownMenuItemDemo(expandState, Icons.Filled.Delete, "删除")
+                }
+            }
+        }
+    }
+}
+
+
 
